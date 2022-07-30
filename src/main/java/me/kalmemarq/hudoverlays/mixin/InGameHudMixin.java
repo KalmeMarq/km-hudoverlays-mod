@@ -9,7 +9,8 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
+
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
+    @Shadow @Final MinecraftClient client;
     @Shadow private int scaledWidth;
     @Shadow private int scaledHeight;
 
@@ -25,9 +27,9 @@ public class InGameHudMixin {
 
     @Inject(at = @At("TAIL"), method = "render")
     private void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-       PlayerEntity player = MinecraftClient.getInstance().player;
+       PlayerEntity player = this.client.player;
 
-       if (player != null && !MinecraftClient.getInstance().options.hudHidden) {
+       if (player != null && !this.client.options.hudHidden) {
            HudOverlayContext context = new HudOverlayContext(player);
 
            for (CustomHudOverlay cov : HudOverlayManager.getCustomHudOverlays()) {
@@ -47,7 +49,7 @@ public class InGameHudMixin {
        if (texture.equals(HudOverlayManager.PUMPKIN_BLUR)) {
            if (HudOverlayManager.getPumpkinOverlays().size() > 0) {
 
-               HudOverlayContext context = new HudOverlayContext(MinecraftClient.getInstance().player);
+               HudOverlayContext context = new HudOverlayContext(this.client.player);
 
                for (HudOverlay ov : HudOverlayManager.getPumpkinOverlays()) {
                    if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), opacity, ov);
@@ -57,7 +59,7 @@ public class InGameHudMixin {
            }
        } else if (texture.equals(HudOverlayManager.POWDER_SNOW_OUTLINE)) {
            if (HudOverlayManager.getPowderSnowOverlays().size() > 0) {
-               HudOverlayContext context = new HudOverlayContext(MinecraftClient.getInstance().player);
+               HudOverlayContext context = new HudOverlayContext(this.client.player);
 
                for (HudOverlay ov : HudOverlayManager.getPowderSnowOverlays()) {
                    if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), opacity, ov);

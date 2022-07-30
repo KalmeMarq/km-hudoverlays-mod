@@ -3,11 +3,14 @@ package me.kalmemarq.hudoverlays.condition;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.kalmemarq.hudoverlays.HudOverlayContext;
-import me.kalmemarq.hudoverlays.HudOverlayMod;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
+import net.minecraft.util.registry.Registry;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -113,5 +116,21 @@ public class HasItemCondition implements IHudOverlayCondition {
         }
 
         return true;
+    }
+
+    public static final class Serializer implements IHudOverlayConditionSerializer {
+        @Override
+        public IHudOverlayCondition fromJson(JsonObject obj) {
+            String slot = JsonHelper.getString(obj, "slot");
+            String name = JsonHelper.getString(obj, "item");
+            Item item = Registry.ITEM.get(new Identifier(name));
+            Integer count = null;
+            if (JsonHelper.hasNumber(obj, "count")) {
+                count = JsonHelper.getInt(obj, "count");
+            }
+            JsonObject nbt = JsonHelper.getObject(obj, "nbt", null);
+            boolean equalNBT = JsonHelper.getString(obj, "match_nbt", "equal").equals("equal");
+            return new HasItemCondition(slot, item, count, nbt, equalNBT);
+        }
     }
 }

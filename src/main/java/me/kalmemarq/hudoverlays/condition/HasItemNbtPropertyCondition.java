@@ -1,8 +1,11 @@
 package me.kalmemarq.hudoverlays.condition;
 
+import com.google.gson.JsonObject;
+
 import me.kalmemarq.hudoverlays.HudOverlayContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.JsonHelper;
 
 public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
     public String name;
@@ -32,5 +35,13 @@ public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
         }
 
         return false;
+    }
+
+    public static final class Serializer implements IHudOverlayConditionSerializer {
+        @Override
+        public IHudOverlayCondition fromJson(JsonObject obj) {
+            String name = JsonHelper.getString(obj, "name");
+            return new HasItemNbtPropertyCondition(name);
+        }
     }
 }

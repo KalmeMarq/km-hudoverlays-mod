@@ -1,12 +1,17 @@
 package me.kalmemarq.hudoverlays.condition;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonObject;
+
 import me.kalmemarq.hudoverlays.HudOverlayContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
+import net.minecraft.util.registry.Registry;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -42,5 +47,18 @@ public class HasItemInInventoryCondition implements IHudOverlayCondition {
         }
 
         return false;
+    }
+
+    public static final class Serializer implements IHudOverlayConditionSerializer {
+        @Override
+        public IHudOverlayCondition fromJson(JsonObject obj) {
+            String name = JsonHelper.getString(obj, "item");
+            Item item = Registry.ITEM.get(new Identifier(name));
+            Integer count = null;
+            if (JsonHelper.hasNumber(obj, "count")) {
+                count = JsonHelper.getInt(obj, "count");
+            }
+            return new HasItemInInventoryCondition(item, count);
+        }
     }
 }

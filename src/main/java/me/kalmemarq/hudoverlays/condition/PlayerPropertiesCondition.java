@@ -4,8 +4,6 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.kalmemarq.hudoverlays.HudOverlayContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.JsonHelper;
 
@@ -34,6 +32,17 @@ public class PlayerPropertiesCondition implements IHudOverlayCondition {
         }
 
         return true;
+    }
+
+    public static final class Serializer implements IHudOverlayConditionSerializer {
+        @Override
+        public IHudOverlayCondition fromJson(JsonObject obj) {
+            JsonObject props = new JsonObject();
+            if (JsonHelper.hasJsonObject(obj, "properties")) {
+                props = JsonHelper.getObject(obj, "properties");
+            }
+            return new PlayerPropertiesCondition(props);
+        }
     }
 
     public static final class PlayerProperty {
