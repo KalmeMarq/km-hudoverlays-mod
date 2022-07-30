@@ -5,7 +5,7 @@ Allows you configure the vanilla overlays that appear on the hud or add custom o
 Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
 
 
-### Example
+### Examples
 ```json
 {
   "pumpkin": {
@@ -21,6 +21,51 @@ Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
       {
         "texture": "minecraft:textures/misc/powder_snow_outline.png",
         "layer": -90
+      }
+    ]
+  }
+}
+```
+
+Custom overlay
+```json
+{
+  "my_custom0": {
+    "overlays": [
+      {
+        "texture": "kmhudoverlays:textures/misc/powder_snow_outline_red_nineslice.png",
+        "nineslice_size": [178, 128, 178, 128],
+        "base_size": [512, 256],
+        "fit_to_screen": true,
+        "layer": -100
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "player_properties",
+        "properties": {
+          "is_on_fire": true
+        }
+      },
+      {
+        "condition": "is_underwater",
+        "value": false
+      },
+      {
+        "condition": "is_gamemode",
+        "name": "survival"
+      },
+      {
+        "condition": "is_difficulty",
+        "name": "easy"
+      },
+      {
+        "condition": "has_item",
+        "slot": "hotbar.0",
+        "item": "minecraft:iron_helmet",
+        "nbt": {
+          "behaveAsPumpkin": "1b"
+        }
       }
     ]
   }
