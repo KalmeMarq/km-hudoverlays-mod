@@ -27,7 +27,7 @@ Allows you configure the vanilla overlays that appear on the hud or add custom o
 
 ```
 {
-  minecraft:pumpkin?: {
+  minecraft:pumpkin_blur?: {
     overlays?: {
       texture: Identifier
       fit_to_screen?: boolean
@@ -39,7 +39,7 @@ Allows you configure the vanilla overlays that appear on the hud or add custom o
     }[],
     conditions?: Condition[]
   }
-  minecraft:powder_snow?: {
+  minecraft:powder_snow_outline?: {
     overlays?: {
       texture: Identifier
       fit_to_screen?: boolean
@@ -72,6 +72,7 @@ Checks if the player is underwater.
 ```
 {
   condition: 'is_underwater'
+  value?: boolean
 }
 ```
 
