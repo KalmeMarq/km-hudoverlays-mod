@@ -25,12 +25,12 @@ public class HudOverlayContext {
     }
 
     public List<ItemStack> getHotbarItems() {
-        List<ItemStack> l = player.getInventory().main.subList(27, 36);
+        List<ItemStack> l = player.getInventory().main.subList(0, 9);
         return l;
     }
 
     public List<ItemStack> getInventoryItems() {
-        List<ItemStack> l = player.getInventory().main.subList(0, 27);
+        List<ItemStack> l = player.getInventory().main.subList(9, 36);
         return l;
     }
 }

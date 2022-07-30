@@ -135,7 +135,7 @@ Checks if player has the specified properties.
 }
 ```
 
-Checks if the helmet item has a the given nbt property.
+Checks if the helmet item has a given nbt property.
 ```
 {
   condition: 'has_item_nbt_property'

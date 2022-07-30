@@ -30,7 +30,7 @@
       },
       {
         "condition": "has_item",
-        "slot": "armor.helmet",
+        "slot": "inventory.0",
         "item": "minecraft:iron_helmet",
         "nbt": {
           "behaveAsPumpkin": "1b"
