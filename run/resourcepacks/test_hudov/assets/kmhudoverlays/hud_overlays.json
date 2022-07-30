@@ -13,7 +13,7 @@
       {
         "condition": "player_properties",
         "properties": {
-          "is_on_fire": false
+          "is_on_fire": true
         }
       },
       {
@@ -30,7 +30,7 @@
       },
       {
         "condition": "has_item",
-        "slot": "inventory.0",
+        "slot": "hotbar.0",
         "item": "minecraft:iron_helmet",
         "nbt": {
           "behaveAsPumpkin": "1b"

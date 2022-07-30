@@ -1,6 +1,10 @@
 # KM Hud Overlays Mod
 Allows you configure the vanilla overlays that appear on the hud or add custom ones.
 
+
+Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
+
+
 ### Example
 ```json
 {
