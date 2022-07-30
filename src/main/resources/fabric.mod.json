@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "kmhudoverlays",
+  "version": "${version}",
+  "name": "KM Hud Overlays Mod",
+  "description": "Allows you to configure the vanilla hud overlays",
+  "authors": [
+    "KalmeMarq"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/kmhudoverlays/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.kalmemarq.hudoverlays.HudOverlayMod"
+    ]
+  },
+  "mixins": [
+    "kmhudoverlays.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+  }
+}
