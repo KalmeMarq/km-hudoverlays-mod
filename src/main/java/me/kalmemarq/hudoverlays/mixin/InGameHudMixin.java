@@ -25,18 +25,18 @@ public class InGameHudMixin {
     @Shadow private int scaledWidth;
     @Shadow private int scaledHeight;
 
-    @Inject(method = "renderVignetteOverlay", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShader(Ljava/util/function/Supplier;)V"), cancellable = true)
-    private void renderVignetteOverlay(Entity entity, CallbackInfo ci) {
-        if (HudOverlayManager.vignetteOverlay.getOverlays().size() > 0) {
-            HudOverlayContext context = new HudOverlayContext(this.client.player);
+    // @Inject(method = "renderVignetteOverlay", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShader(Ljava/util/function/Supplier;)V"), cancellable = true)
+    // private void renderVignetteOverlay(Entity entity, CallbackInfo ci) {
+    //     if (HudOverlayManager.vignetteOverlay.getOverlays().size() > 0) {
+    //         HudOverlayContext context = new HudOverlayContext(this.client.player);
 
-            for (HudOverlay ov : HudOverlayManager.vignetteOverlay.getOverlays()) {
-                if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), 1.0f, ov);
-            }
+    //         for (HudOverlay ov : HudOverlayManager.vignetteOverlay.getOverlays()) {
+    //             if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), 1.0f, ov);
+    //         }
 
-            ci.cancel();
-        }
-    }
+    //         ci.cancel();
+    //     }
+    // }
 
     // @Inject(method = "renderPortalOverlay", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;disableDepthTest()V"), cancellable = true)
     // private void renderPortalOverlay(float nauseaStrength, CallbackInfo ci) {
