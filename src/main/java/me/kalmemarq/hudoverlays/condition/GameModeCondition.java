@@ -21,9 +21,9 @@ public class GameModeCondition implements IHudOverlayCondition {
         return playerListEntry != null && playerListEntry.getGameMode() == this.gameMode;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer {
+    public static final class Serializer implements IHudOverlayConditionSerializer<GameModeCondition> {
         @Override
-        public IHudOverlayCondition fromJson(JsonObject obj) {
+        public GameModeCondition fromJson(JsonObject obj) {
             String gm = JsonHelper.getString(obj, "name");
             return new GameModeCondition(GameMode.byName(gm, GameMode.CREATIVE));
         }

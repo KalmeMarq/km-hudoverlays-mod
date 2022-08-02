@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -19,11 +20,49 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
-    @Shadow @Final MinecraftClient client;
+    @Shadow @Final
+    private MinecraftClient client;
     @Shadow private int scaledWidth;
     @Shadow private int scaledHeight;
 
-    @Shadow private int lastHealthValue;
+    @Inject(method = "renderVignetteOverlay", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShader(Ljava/util/function/Supplier;)V"), cancellable = true)
+    private void renderVignetteOverlay(Entity entity, CallbackInfo ci) {
+        if (HudOverlayManager.vignetteOverlay.getOverlays().size() > 0) {
+            HudOverlayContext context = new HudOverlayContext(this.client.player);
+
+            for (HudOverlay ov : HudOverlayManager.vignetteOverlay.getOverlays()) {
+                if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), 1.0f, ov);
+            }
+
+            ci.cancel();
+        }
+    }
+
+    // @Inject(method = "renderPortalOverlay", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;disableDepthTest()V"), cancellable = true)
+    // private void renderPortalOverlay(float nauseaStrength, CallbackInfo ci) {
+    //     if (HudOverlayManager.getPortalOverlays().size() > 0) {
+    //         HudOverlayContext context = new HudOverlayContext(this.client.player);
+
+    //         for (HudOverlay ov : HudOverlayManager.getPortalOverlays()) {
+    //             if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), 1.0f, ov);
+    //         }
+
+    //         ci.cancel();
+    //     }
+    // }
+
+    @Inject(method = "renderSpyglassOverlay", at = @At("HEAD"), cancellable = true)
+    private void renderSpyglassOverlay(float scale, CallbackInfo ci) {
+        if (HudOverlayManager.getSpyglassOverlays().size() > 0) {
+            HudOverlayContext context = new HudOverlayContext(this.client.player);
+
+            for (HudOverlay ov : HudOverlayManager.getSpyglassOverlays()) {
+                if (ov.canDisplay(context)) renderOverlayReplacer(ov.getTexture(), ov.getLayer(), 1.0f, ov);
+            }
+
+            ci.cancel();
+        }
+    }
 
     @Inject(at = @At("TAIL"), method = "render")
     private void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
@@ -95,7 +134,7 @@ public class InGameHudMixin {
                 bufferBuilder.vertex( 0.0f, 0.0f, (double)layer).texture(0.0F, 0.0F).next();
             }
         } else {
-            NinesliceDrawer.renderTexture(bufferBuilder, 0, 0, layer, scaledWidth, scaledHeight, ov.ninesliceInfo);
+            NinesliceDrawer.renderTexture(bufferBuilder, 0, 0, layer, scaledWidth, scaledHeight, ov.ninesliceInfo, ov.getAlpha());
         }
 
         tessellator.draw();

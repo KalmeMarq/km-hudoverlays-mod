@@ -118,9 +118,9 @@ public class HasItemCondition implements IHudOverlayCondition {
         return true;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer {
+    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemCondition> {
         @Override
-        public IHudOverlayCondition fromJson(JsonObject obj) {
+        public HasItemCondition fromJson(JsonObject obj) {
             String slot = JsonHelper.getString(obj, "slot");
             String name = JsonHelper.getString(obj, "item");
             Item item = Registry.ITEM.get(new Identifier(name));

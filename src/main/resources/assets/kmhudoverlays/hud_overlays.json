@@ -1,4 +1,20 @@
 {
+  "minecraft:underwater": {
+    "replace": true,
+    "overlays": []
+  },
+  "minecraft:spyglass": {
+    "replace": true,
+    "overlays": []
+  },
+  "minecraft:portal": {
+    "replace": true,
+    "overlays": []
+  },
+  "minecraft:vignette": {
+    "replace": true,
+    "overlays": []
+  },
   "minecraft:pumpkin_blur": {
     "replace": true,
     "overlays": [

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Maps;
 
 public class HudOverlayConditions {
-    private static Map<String, IHudOverlayConditionSerializer> SERIALIZERS = Maps.newHashMap();
+    private static final Map<String, IHudOverlayConditionSerializer<?>> SERIALIZERS = Maps.newHashMap();
 
     static {
         register("is_difficulty", new DifficultyCondition.Serializer());
@@ -17,14 +17,15 @@ public class HudOverlayConditions {
         register("has_item_nbt_property", new HasItemNbtPropertyCondition.Serializer());
         register("player_properties", new PlayerPropertiesCondition.Serializer());
         register("is_underwater", new UnderwaterCondition.Serializer());
+        register("is_using_spyglass", new IsUsingSpyglass.Serializer());
     }
 
-    private static void register(String name, IHudOverlayConditionSerializer serializer) {
+    private static void register(String name, IHudOverlayConditionSerializer<?> serializer) {
         SERIALIZERS.put(name, serializer);
     }
 
     @Nullable
-    public static IHudOverlayConditionSerializer getSerializer(String name) {
+    public static IHudOverlayConditionSerializer<?> getSerializer(String name) {
         return SERIALIZERS.get(name);
     }
 }

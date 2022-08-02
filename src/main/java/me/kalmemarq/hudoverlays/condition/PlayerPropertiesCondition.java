@@ -34,9 +34,9 @@ public class PlayerPropertiesCondition implements IHudOverlayCondition {
         return true;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer {
+    public static final class Serializer implements IHudOverlayConditionSerializer<PlayerPropertiesCondition> {
         @Override
-        public IHudOverlayCondition fromJson(JsonObject obj) {
+        public PlayerPropertiesCondition fromJson(JsonObject obj) {
             JsonObject props = new JsonObject();
             if (JsonHelper.hasJsonObject(obj, "properties")) {
                 props = JsonHelper.getObject(obj, "properties");

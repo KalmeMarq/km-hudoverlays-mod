@@ -37,9 +37,9 @@ public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
         return false;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer {
+    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemNbtPropertyCondition> {
         @Override
-        public IHudOverlayCondition fromJson(JsonObject obj) {
+        public HasItemNbtPropertyCondition fromJson(JsonObject obj) {
             String name = JsonHelper.getString(obj, "name");
             return new HasItemNbtPropertyCondition(name);
         }

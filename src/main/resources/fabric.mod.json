@@ -3,7 +3,7 @@
   "id": "kmhudoverlays",
   "version": "${version}",
   "name": "KM Hud Overlays Mod",
-  "description": "Allows you to configure the vanilla hud overlays",
+  "description": "Allows you to configure the vanilla hud overlays.",
   "authors": [
     "KalmeMarq"
   ],

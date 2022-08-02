@@ -108,7 +108,7 @@ public class CustomHudOverlay {
                                 JsonObject eaObj = ea.getAsJsonObject();
                                 String type = JsonHelper.getString(eaObj, "condition");
 
-                                IHudOverlayConditionSerializer serializer = HudOverlayConditions.getSerializer(type);
+                                IHudOverlayConditionSerializer<?> serializer = HudOverlayConditions.getSerializer(type);
                                 if (serializer != null) {
                                     hudOverlay.addCondition(serializer.fromJson(eaObj));
                                 }
@@ -130,7 +130,7 @@ public class CustomHudOverlay {
                         JsonObject eObj = e.getAsJsonObject();
                         String type = JsonHelper.getString(eObj, "condition");
 
-                        IHudOverlayConditionSerializer serializer = HudOverlayConditions.getSerializer(type);
+                        IHudOverlayConditionSerializer<?> serializer = HudOverlayConditions.getSerializer(type);
                         if (serializer != null) {
                             customHudOverlay.addCondition(serializer.fromJson(eObj));
                         }

@@ -49,9 +49,9 @@ public class HasItemInInventoryCondition implements IHudOverlayCondition {
         return false;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer {
+    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemInInventoryCondition> {
         @Override
-        public IHudOverlayCondition fromJson(JsonObject obj) {
+        public HasItemInInventoryCondition fromJson(JsonObject obj) {
             String name = JsonHelper.getString(obj, "item");
             Item item = Registry.ITEM.get(new Identifier(name));
             Integer count = null;

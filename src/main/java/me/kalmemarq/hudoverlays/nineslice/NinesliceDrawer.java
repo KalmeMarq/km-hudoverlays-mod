@@ -3,7 +3,7 @@ package me.kalmemarq.hudoverlays.nineslice;
 import net.minecraft.client.render.BufferBuilder;
 
 public class NinesliceDrawer {
-    public static void renderTexture(BufferBuilder bufferBuilder, int x, int y, int z, int width, int height, NinesliceInfo nsInfo) {
+    public static void renderTexture(BufferBuilder bufferBuilder, int x, int y, int z, int width, int height, NinesliceInfo nsInfo, float alpha) {
         int u = 0;
         int v = 0;
         int regionWidth = nsInfo.baseWidth;

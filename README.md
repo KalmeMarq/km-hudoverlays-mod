@@ -1,5 +1,5 @@
-# KM Hud Overlays Mod
-Allows you configure the vanilla overlays that appear on the hud or add custom ones.
+# KM Hud Overlays Mod (Fabric)
+Allows you customize the vanilla overlays that appear on the hud or add custom ones with conditions. All through a json file in a resource pack.
 
 
 Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
@@ -85,8 +85,7 @@ Custom overlay
       layer?: int
       alpha?: float // buggy
       conditions?: Condition[]
-    }[],
-    conditions?: Condition[]
+    }[]
   }
   minecraft:powder_snow_outline?: {
     overlays?: {
@@ -97,8 +96,18 @@ Custom overlay
       layer?: int
       alpha?: float // buggy
       conditions?: Condition[]
-    }[],
-    conditions?: Condition[]
+    }[]
+  }
+   minecraft:spyglass?: {
+    overlays?: {
+      texture: Identifier
+      fit_to_screen?: boolean
+      nineslice_size?: [int, int] | [int, int, int, int]
+      base_size?: [int, int]
+      layer?: int
+      alpha?: float // buggy
+      conditions?: Condition[]
+    }[]
   }
   [custom: string]: {
     overlays?: {
@@ -121,6 +130,14 @@ Checks if the player is underwater.
 ```
 {
   condition: 'is_underwater'
+  value?: boolean
+}
+```
+
+Checks if the player is using the spyglass.
+```
+{
+  condition: 'is_using_spyglass'
   value?: boolean
 }
 ```

@@ -20,9 +20,9 @@ public class DifficultyCondition implements IHudOverlayCondition {
         return context.getPlayer().getWorld().getDifficulty() == this.diff;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer {
+    public static final class Serializer implements IHudOverlayConditionSerializer<DifficultyCondition> {
         @Override
-        public IHudOverlayCondition fromJson(JsonObject obj) {
+        public DifficultyCondition fromJson(JsonObject obj) {
             String df = JsonHelper.getString(obj, "name");
             return new DifficultyCondition(Difficulty.byName(df));
         }
