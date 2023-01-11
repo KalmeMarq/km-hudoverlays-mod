@@ -1,5 +1,10 @@
 package me.kalmemarq.hudoverlays.condition;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 
@@ -8,14 +13,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Iterator;
-import java.util.List;
 
 public class HasItemInInventoryCondition implements IHudOverlayCondition {
     public Item item;
@@ -40,7 +40,7 @@ public class HasItemInInventoryCondition implements IHudOverlayCondition {
             List<ItemStack> list = var2.next();
 
             for (ItemStack itemStack : list) {
-                if (!itemStack.isEmpty() && itemStack.isItemEqualIgnoreDamage(stack)) {
+                if (!itemStack.isEmpty() && itemStack.isItemEqual(stack)) {
                     return this.count == null || itemStack.getCount() == this.count;
                 }
             }
@@ -53,7 +53,7 @@ public class HasItemInInventoryCondition implements IHudOverlayCondition {
         @Override
         public HasItemInInventoryCondition fromJson(JsonObject obj) {
             String name = JsonHelper.getString(obj, "item");
-            Item item = Registry.ITEM.get(new Identifier(name));
+            Item item = Registries.ITEM.get(new Identifier(name));
             Integer count = null;
             if (JsonHelper.hasNumber(obj, "count")) {
                 count = JsonHelper.getInt(obj, "count");

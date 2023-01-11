@@ -1,20 +1,21 @@
 package me.kalmemarq.hudoverlays.condition;
 
+import java.util.List;
+import java.util.Map;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import me.kalmemarq.hudoverlays.HudOverlayContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.Map;
 
 public class HasItemCondition implements IHudOverlayCondition {
     public String slot;
@@ -123,7 +124,7 @@ public class HasItemCondition implements IHudOverlayCondition {
         public HasItemCondition fromJson(JsonObject obj) {
             String slot = JsonHelper.getString(obj, "slot");
             String name = JsonHelper.getString(obj, "item");
-            Item item = Registry.ITEM.get(new Identifier(name));
+            Item item = Registries.ITEM.get(new Identifier(name));
             Integer count = null;
             if (JsonHelper.hasNumber(obj, "count")) {
                 count = JsonHelper.getInt(obj, "count");
