@@ -30,9 +30,7 @@ public class NinesliceDrawer {
     }
 
     public static void renderTextureRegion(BufferBuilder bufferBuilder, int x, int y, int z, int width, int height, int u, int v, int regionWidth, int regionHeight, NinesliceInfo nsInfo) {
-        double x0 = x;
         double x1 = x + width;
-        double y0 = y;
         double y1 = y + height;
 
         float u0 = (u + 0.0f) / nsInfo.baseWidth;
@@ -40,9 +38,9 @@ public class NinesliceDrawer {
         float u1 = (u + (float)regionWidth) / nsInfo.baseWidth;
         float v1 = (v + (float)regionHeight) / nsInfo.baseHeight;
 
-        bufferBuilder.vertex(x0, y1, z).texture(u0, v1).next();
+        bufferBuilder.vertex(x, y1, z).texture(u0, v1).next();
         bufferBuilder.vertex(x1, y1, z).texture(u1, v1).next();
-        bufferBuilder.vertex(x1, y0, z).texture(u1, v0).next();
-        bufferBuilder.vertex(x0, y0, z).texture(u0, v0).next();
+        bufferBuilder.vertex(x1, y, z).texture(u1, v0).next();
+        bufferBuilder.vertex(x, y, z).texture(u0, v0).next();
     }
 }

@@ -1,8 +1,12 @@
 package me.kalmemarq.hudoverlays.condition;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtList;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.JsonElement;
@@ -117,6 +121,37 @@ public class HasItemCondition implements IHudOverlayCondition {
         }
 
         return true;
+    }
+
+    private static boolean weakMatchNBT(@Nullable NbtElement standard, @Nullable NbtElement subject) {
+        if (standard == subject) {
+            return true;
+        } else if (standard == null) {
+            return true;
+        } else if (subject == null) {
+            return false;
+        } else if (!standard.getClass().equals(subject.getClass())) {
+            return false;
+        } else if (standard instanceof NbtCompound standComp) {
+            NbtCompound subjComp = (NbtCompound) subject;
+
+            Iterator<String> iter = subjComp.getKeys().iterator();
+
+            String key;
+            do {
+                if (!iter.hasNext()) {
+                    return true;
+                }
+
+                key = iter.next();
+            } while(weakMatchNBT(standComp.get(key), subjComp.get(key)));
+
+            return false;
+        } else if (standard instanceof NbtList) {
+            return true;
+        } else {
+            return standard.equals(subject);
+        }
     }
 
     public static final class Serializer implements IHudOverlayConditionSerializer<HasItemCondition> {

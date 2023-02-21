@@ -114,7 +114,7 @@ public class InGameHudMixin {
         // RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(ov.getAlpha() < 1.0f ? GameRenderer::getPositionColorTexShader : GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(ov.getAlpha() < 1.0f ? GameRenderer::getPositionColorTexProgram : GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, opacity);
         RenderSystem.setShaderTexture(0, texture);
         Tessellator tessellator = Tessellator.getInstance();

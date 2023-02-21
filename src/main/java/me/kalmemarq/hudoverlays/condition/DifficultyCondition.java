@@ -8,11 +8,10 @@ import org.jetbrains.annotations.Nullable;
 import com.google.gson.JsonObject;
 
 public class DifficultyCondition implements IHudOverlayCondition {
-    @Nullable
     private final Difficulty diff;
 
     public DifficultyCondition(@Nullable Difficulty difficulty) {
-        this.diff = difficulty;
+        this.diff = difficulty == null ? Difficulty.PEACEFUL : difficulty;
     }
 
     @Override

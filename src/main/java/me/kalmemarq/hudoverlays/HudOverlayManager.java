@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.util.*;
 
 public class HudOverlayManager implements SimpleSynchronousResourceReloadListener {
-    public static final Random RANDOM = new Random();
     private static final Identifier RESOURCE = new Identifier(HudOverlayMod.MOD_ID, "hud_overlays.json");
     private static final Gson GSON = new GsonBuilder().setLenient().setPrettyPrinting().create();
 
@@ -124,10 +123,6 @@ public class HudOverlayManager implements SimpleSynchronousResourceReloadListene
 
     public static List<HudOverlay> getSpyglassOverlays() {
         return spyglassOverlay.getOverlays();
-    }
-
-    public static List<HudOverlay> getPortalOverlays() {
-        return portalOverlay.getOverlays();
     }
 
     public static List<HudOverlay> getPumpkinOverlays() {

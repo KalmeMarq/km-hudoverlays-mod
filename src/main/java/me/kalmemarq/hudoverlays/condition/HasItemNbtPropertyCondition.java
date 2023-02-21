@@ -26,9 +26,7 @@ public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
                     if (c.contains(this.name)) {
                         return true;
                     } else if (c.contains("tag")) {
-                        if (c.getCompound("tag").contains(this.name)) {
-                            return true;
-                        }
+                        return c.getCompound("tag").contains(this.name);
                     }
                 }
             }

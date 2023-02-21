@@ -20,7 +20,7 @@ public class HudOverlayConditions {
         register("is_using_spyglass", new IsUsingSpyglass.Serializer());
     }
 
-    private static void register(String name, IHudOverlayConditionSerializer<?> serializer) {
+    public static void register(String name, IHudOverlayConditionSerializer<?> serializer) {
         SERIALIZERS.put(name, serializer);
     }
 
