@@ -2,14 +2,14 @@ package me.kalmemarq.hudoverlays.condition;
 
 import com.google.gson.JsonObject;
 
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.GameMode;
 
-public class GameModeCondition implements IHudOverlayCondition {
+public class GameModeCondition implements IOverlayCondition {
     public GameMode gameMode;
 
     public GameModeCondition(GameMode gameMode) {
@@ -17,7 +17,7 @@ public class GameModeCondition implements IHudOverlayCondition {
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         ClientPlayNetworkHandler networkHandler = MinecraftClient.getInstance().getNetworkHandler();
 
         PlayerListEntry playerListEntry = null;
@@ -28,7 +28,7 @@ public class GameModeCondition implements IHudOverlayCondition {
         return playerListEntry != null && playerListEntry.getGameMode() == this.gameMode;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<GameModeCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<GameModeCondition> {
         @Override
         public GameModeCondition fromJson(JsonObject obj) {
             String gm = JsonHelper.getString(obj, "name", "creative");

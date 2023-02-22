@@ -1,10 +1,9 @@
 package me.kalmemarq.hudoverlays;
 
-import me.kalmemarq.hudoverlays.condition.HudOverlayConditions;
-import me.kalmemarq.hudoverlays.condition.IHudOverlayCondition;
-import me.kalmemarq.hudoverlays.condition.IHudOverlayConditionSerializer;
+import me.kalmemarq.hudoverlays.condition.OverlayConditions;
+import me.kalmemarq.hudoverlays.condition.IOverlayCondition;
+import me.kalmemarq.hudoverlays.condition.IOverlayConditionSerializer;
 import me.kalmemarq.hudoverlays.nineslice.NinesliceInfo;
-import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -18,7 +17,7 @@ import com.google.gson.JsonObject;
 
 public class CustomHudOverlay {
     private final List<HudOverlay> overlays;
-    private final List<IHudOverlayCondition> conditions;
+    private final List<IOverlayCondition> conditions;
 
     public CustomHudOverlay() {
         this.overlays = new ArrayList<>();
@@ -30,7 +29,7 @@ public class CustomHudOverlay {
         this.overlays.sort(Comparator.comparingInt(HudOverlay::getLayer));
     }
 
-    public void addCondition(IHudOverlayCondition condition) {
+    public void addCondition(IOverlayCondition condition) {
         this.conditions.add(condition);
     }
 
@@ -38,8 +37,8 @@ public class CustomHudOverlay {
         return this.overlays;
     }
 
-    public boolean canDisplay(HudOverlayContext context) {
-        for (IHudOverlayCondition cond : conditions) {
+    public boolean canDisplay(OverlayContext context) {
+        for (IOverlayCondition cond : conditions) {
             if (!cond.test(context)) {
                 return false;
             }
@@ -78,8 +77,8 @@ public class CustomHudOverlay {
                                 OverlayProperty.ALPHA.parse(eObj),
                                 nsInfo);
 
-                        List<IHudOverlayCondition> conds = OverlayProperty.CONDITIONS.parse(eObj);
-                        for (IHudOverlayCondition cond : conds) {
+                        List<IOverlayCondition> conds = OverlayProperty.CONDITIONS.parse(eObj);
+                        for (IOverlayCondition cond : conds) {
                             hudOverlay.addCondition(cond);
                         }
 
@@ -91,8 +90,8 @@ public class CustomHudOverlay {
             }
 
             try {
-                List<IHudOverlayCondition> conds = OverlayProperty.CONDITIONS.parse(obj);
-                for (IHudOverlayCondition cond : conds) {
+                List<IOverlayCondition> conds = OverlayProperty.CONDITIONS.parse(obj);
+                for (IOverlayCondition cond : conds) {
                     customHudOverlay.addCondition(cond);
                 }
             } catch (Exception e) {
@@ -158,8 +157,8 @@ public class CustomHudOverlay {
             }
             return arr;
         }, new int[] {256, 256});
-        public static final OverlayProperty<List<IHudOverlayCondition>> CONDITIONS = new OverlayProperty<>("conditions", el -> {
-            List<IHudOverlayCondition> conds = new ArrayList<>();
+        public static final OverlayProperty<List<IOverlayCondition>> CONDITIONS = new OverlayProperty<>("conditions", el -> {
+            List<IOverlayCondition> conds = new ArrayList<>();
             if (el.isJsonArray()) {
                 JsonArray condArr = el.getAsJsonArray();
 
@@ -167,7 +166,7 @@ public class CustomHudOverlay {
                     JsonObject eObj = e.getAsJsonObject();
                     String type = JsonHelper.getString(eObj, "condition");
 
-                    IHudOverlayConditionSerializer<?> serializer = HudOverlayConditions.getSerializer(type);
+                    IOverlayConditionSerializer<?> serializer = OverlayConditions.getSerializer(type);
                     if (serializer != null) {
                         conds.add(serializer.fromJson(eObj));
                     }

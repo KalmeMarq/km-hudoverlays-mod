@@ -13,6 +13,6 @@ public class HudOverlayMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new HudOverlayManager());
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new OverlayManager());
 	}
 }

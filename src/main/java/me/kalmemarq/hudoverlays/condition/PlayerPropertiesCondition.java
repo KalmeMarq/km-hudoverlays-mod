@@ -3,13 +3,13 @@ package me.kalmemarq.hudoverlays.condition;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.JsonHelper;
 
 import java.util.Map;
 
-public class PlayerPropertiesCondition implements IHudOverlayCondition {
+public class PlayerPropertiesCondition implements IOverlayCondition {
     private final JsonObject props;
 
     public PlayerPropertiesCondition(JsonObject props) {
@@ -17,7 +17,7 @@ public class PlayerPropertiesCondition implements IHudOverlayCondition {
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         PlayerEntity player = context.getPlayer();
 
         for (Map.Entry<String, JsonElement> e : this.props.entrySet()) {
@@ -34,7 +34,7 @@ public class PlayerPropertiesCondition implements IHudOverlayCondition {
         return true;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<PlayerPropertiesCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<PlayerPropertiesCondition> {
         @Override
         public PlayerPropertiesCondition fromJson(JsonObject obj) {
             JsonObject props = new JsonObject();

@@ -1,5 +1,5 @@
 # KM Hud Overlays Mod (Fabric)
-Allows you customize the vanilla overlays that appear on the hud or add custom ones with conditions. All through a json file in a resource pack.
+Allows you to customize the vanilla overlays that appear on the hud or add custom ones with conditions. All through a json file in a resource pack.
 
 
 Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
@@ -8,17 +8,36 @@ Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
 ### Examples
 ```json
 {
-  "pumpkin": {
+  "minecraft:pumpkin": {
     "overlays": [
       {
+        "type": "image",
         "texture": "minecraft:textures/misc/pumpkinblur",
         "layer": -90
+      },
+      {
+        "type": "gradient_renderer",
+        "size": [64, 64],
+        "offset": ["50%w", "50%h"],
+        "orientation": "horizontal",
+        "color_start": "rgb(255, 0, 255)",
+        "color_end": "rgb(0, 0, 255)",
+        "layer": 100
+      },
+      {
+        "type": "text",
+        "text": { "translate": "menu.play", "color": "#FF00FF" },
+        "offset": ["50% - 50%w", 0],
+        "anchor_in_parent": "left_middle",
+        "anchor_in_self": "left_middle",
+        "layer": 100
       }
     ]
   },
-  "powder_snow": {
+  "minecraft:powder_snow": {
     "overlays": [
       {
+        "type": "image",
         "texture": "minecraft:textures/misc/powder_snow_outline.png",
         "layer": -90
       }
@@ -28,15 +47,16 @@ Resource pack file: **assets/kmhudoverlays/hud_overlays.json**
 ```
 
 Custom overlay
-```json
+```jsonc
 {
   "my_custom0": {
     "overlays": [
       {
+        "type": "image",
         "texture": "kmhudoverlays:textures/misc/powder_snow_outline_red_nineslice.png",
         "nineslice_size": [178, 128, 178, 128],
-        "base_size": [512, 256],
-        "fit_to_screen": true,
+        "texture_size": [512, 256],
+        "size": ["100%", "100%"],
         "layer": -100
       }
     ],
@@ -75,52 +95,117 @@ Custom overlay
 ### Properties
 
 ```
-{
-  minecraft:pumpkin_blur?: {
-    overlays?: {
-      texture: Identifier
-      fit_to_screen?: boolean
-      nineslice_size?: [int, int] | [int, int, int, int]
-      base_size?: [int, int]
-      layer?: int
-      alpha?: float // buggy
-      conditions?: Condition[]
-    }[]
-  }
-  minecraft:powder_snow_outline?: {
-    overlays?: {
-      texture: Identifier
-      fit_to_screen?: boolean
-      nineslice_size?: [int, int] | [int, int, int, int]
-      base_size?: [int, int]
-      layer?: int
-      alpha?: float // buggy
-      conditions?: Condition[]
-    }[]
-  }
-   minecraft:spyglass?: {
-    overlays?: {
-      texture: Identifier
-      fit_to_screen?: boolean
-      nineslice_size?: [int, int] | [int, int, int, int]
-      base_size?: [int, int]
-      layer?: int
-      alpha?: float // buggy
-      conditions?: Condition[]
-    }[]
-  }
-  [custom: string]: {
-    overlays?: {
-      texture: Identifier
-      fit_to_screen?: boolean
-      nineslice_size?: [int, int] | [int, int, int, int]
-      base_size?: [int, int]
-      layer?: int
-      alpha?: float // buggy
-      conditions?: Condition[]
-    }[],
+OverlayContainer {
+    overlays?: Overlay[]
     conditions?: Condition[]
-  }
+}
+
+Anchor = "top_left" | "top_middle" | "top_right" | "left_middle" | "center" | "right_middle" | "bottom_left" | "bottom_middle" | "bottom_right"
+
+Text =
+    | string
+    | { text: string, color?: string, extra?: Text[], bold?: boolean, underlined?: boolean, font?: Identifier, strikethrough?: boolean }
+    | { translate: string, with?: Text[], color?: string, extra?: Text[], bold?: boolean, underlined?: boolean, font?: Identifier, strikethrough?: boolean } 
+
+Color = [float, float, float] | "rgb(int, int, int)" | "rgba(int, int, int, int)" | "#RGB" | "#ARGB" |  "#RRGGBB" |  "#AARRGGBB"
+
+// Operators allowed in expressions: + - * /
+// X% percentage of the width or height of the screen
+// Xpx pixels (the px is not needed)
+// X%w percentage of the width of the overlay
+// X%h percentage of the height of the overlay
+// X%vw percentage of the width of the screen
+// X%vh percentage of the height of the screen
+Expression = number | "N - N% / N%x + N%y * Npx"
+
+// Some math functions and constants can be used inside expressions
+guiScale = options.guiScale
+pi = 3.1415927
+sqrt2 = 1.4142135
+clamp(value, min, max)
+sin(value)
+cos(value)
+min(value0, value1)
+max(value0, value1)
+abs(value)
+invsqrt(value)
+sign(value)
+square(value)
+
+// type = text
+Overlay {
+    type: "text"
+    text: Text                          // Default: ""
+    color?: Color                       // Default: white
+    shadow?: boolean                    // Default: "top_left"
+    size?: [Expression, Expression]     // Default: [width of the text, 9]
+    max_size?: [Expression, Expression] // Default: size
+    min_size?: [Expression, Expression] // Default: size
+    offset?: [Expression, Expression]   // Default: [0, 0] 
+    anchor_in_parent?: Anchor           // Default: "top_left"
+    anchor_in_self?: Anchor             // Default: "top_left"
+    layer?: integer                     // Default: -90
+    alpha?: float                       // Default: 1.0
+    conditions?: Condition[]
+}
+
+// type = image
+Overlay {
+    type: "image"
+    texture: Identifier
+    nineslice_size?: [int, int] | [int, int, int, int]
+    base_size?: [int, int]              // Deprecated, use texture_size
+    texture_size?: [int, int]
+    size?: [Expression, Expression]     // Default: [screen width, screen height]
+    max_size?: [Expression, Expression] // Default: size
+    min_size?: [Expression, Expression] // Default: size
+    offset?: [Expression, Expression]   // Default: [0, 0]
+    anchor_in_parent?: Anchor           // Default: "top_left"
+    anchor_in_self?: Anchor             // Default: "top_left"
+    layer?: integer                     // Default: -90
+    alpha?: float                       // Default: 1.0
+    conditions?: Condition[]
+}
+
+// type = fill_renderer
+Overlay {
+    type: "fill_renderer"
+    color: Color
+    size?: [Expression, Expression]     // Default: [screen width, screen height]
+    max_size?: [Expression, Expression] // Default: size
+    min_size?: [Expression, Expression] // Default: size
+    offset?: [Expression, Expression]   // Default: [0, 0]
+    anchor_in_parent?: Anchor           // Default: "top_left"
+    anchor_in_self?: Anchor             // Default: "top_left"
+    layer?: integer                     // Default: -90
+    alpha?: float                       // Default: 1.0
+    conditions?: Condition[]
+}
+
+// type = gradient_renderer
+Overlay {
+    type: "gradient_renderer"
+    color_start: Color
+    color_end: Color
+    orientation: "vertical" | "horizontal" // Default: "vertical"
+    size?: [Expression, Expression]     // Default: [screen width, screen height]
+    max_size?: [Expression, Expression] // Default: size
+    min_size?: [Expression, Expression] // Default: size
+    offset?: [Expression, Expression]   // Default: [0, 0]
+    anchor_in_parent?: Anchor           // Default: "top_left"
+    anchor_in_self?: Anchor             // Default: "top_left"
+    layer?: integer                     // Default: -90
+    alpha?: float                       // Default: 1.0
+    conditions?: Condition[]
+}
+
+{
+  minecraft:pumpkin_blur?: OverlayContainer
+  minecraft:powder_snow_outline?: OverlayContainer
+  minecraft:spyglass?: OverlayContainer
+  minecraft:vignette?: OverlayContainer
+  minecraft:portal?: OverlayContainer
+  [custom: string]: OverlayContainer
 }
 ```
 

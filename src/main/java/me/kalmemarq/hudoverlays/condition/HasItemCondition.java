@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +20,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
-public class HasItemCondition implements IHudOverlayCondition {
+public class HasItemCondition implements IOverlayCondition {
     public String slot;
     public Item item;
     @Nullable
@@ -39,7 +38,7 @@ public class HasItemCondition implements IHudOverlayCondition {
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         PlayerEntity player = context.getPlayer();
         List<ItemStack> armorItems = context.getArmorItems();
 
@@ -154,7 +153,7 @@ public class HasItemCondition implements IHudOverlayCondition {
         }
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<HasItemCondition> {
         @Override
         public HasItemCondition fromJson(JsonObject obj) {
             String slot = JsonHelper.getString(obj, "slot");

@@ -4,11 +4,10 @@ import net.minecraft.client.render.BufferBuilder;
 
 public class NinesliceDrawer {
     public static void renderTexture(BufferBuilder bufferBuilder, int x, int y, int z, int width, int height, NinesliceInfo nsInfo, float alpha) {
-        int u = 0;
-        int v = 0;
-        int regionWidth = nsInfo.baseWidth;
-        int regionHeight = nsInfo.baseHeight;
+        renderTexture(bufferBuilder, x, y, z, 0, 0, nsInfo.baseWidth, nsInfo.baseHeight, width, height, nsInfo, alpha);
+    }
 
+    public static void renderTexture(BufferBuilder bufferBuilder, int x, int y, int z, int u, int v, int regionWidth, int regionHeight, int width, int height, NinesliceInfo nsInfo, float alpha) {
         // Top Left
         renderTextureRegion(bufferBuilder, x, y, z, nsInfo.u0, nsInfo.v0, u, v, nsInfo.u0, nsInfo.v0, nsInfo);
         // Top Middle

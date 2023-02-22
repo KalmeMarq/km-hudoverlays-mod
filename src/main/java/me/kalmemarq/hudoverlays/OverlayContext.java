@@ -7,10 +7,10 @@ import org.apache.commons.compress.utils.Lists;
 import java.util.List;
 import java.util.Collections;
 
-public class HudOverlayContext {
+public class OverlayContext {
     private final PlayerEntity player;
 
-    public HudOverlayContext(PlayerEntity player) {
+    public OverlayContext(PlayerEntity player) {
         this.player = player;
     }
 

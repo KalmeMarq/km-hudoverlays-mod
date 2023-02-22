@@ -1,6 +1,6 @@
 package me.kalmemarq.hudoverlays;
 
-import me.kalmemarq.hudoverlays.condition.IHudOverlayCondition;
+import me.kalmemarq.hudoverlays.condition.IOverlayCondition;
 import me.kalmemarq.hudoverlays.nineslice.NinesliceInfo;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +13,7 @@ public class HudOverlay {
     private final boolean fitToScreen;
     private final int layer;
     private final float alpha;
-    private final List<IHudOverlayCondition> conditions;
+    private final List<IOverlayCondition> conditions;
     @Nullable
     public NinesliceInfo ninesliceInfo;
 
@@ -26,7 +26,7 @@ public class HudOverlay {
         this.ninesliceInfo = ninesliceInfo;
     }
 
-    public void addCondition(IHudOverlayCondition condition) {
+    public void addCondition(IOverlayCondition condition) {
         this.conditions.add(condition);
     }
 
@@ -46,8 +46,8 @@ public class HudOverlay {
         return this.alpha;
     }
 
-    public boolean canDisplay(HudOverlayContext context) {
-        for (IHudOverlayCondition cond : conditions) {
+    public boolean canDisplay(OverlayContext context) {
+        for (IOverlayCondition cond : conditions) {
             if (!cond.test(context)) {
                 return false;
             }
