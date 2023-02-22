@@ -2,6 +2,6 @@ package me.kalmemarq.hudoverlays.condition;
 
 import com.google.gson.JsonObject;
 
-public interface IHudOverlayConditionSerializer<T extends IHudOverlayCondition> {
+public interface IOverlayConditionSerializer<T extends IOverlayCondition> {
     public T fromJson(JsonObject obj);
 }

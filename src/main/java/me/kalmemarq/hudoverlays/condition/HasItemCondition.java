@@ -2,7 +2,7 @@ package me.kalmemarq.hudoverlays.condition;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class HasItemCondition implements IHudOverlayCondition {
+public class HasItemCondition implements IOverlayCondition {
     public String slot;
     public Item item;
     @Nullable
@@ -34,7 +34,7 @@ public class HasItemCondition implements IHudOverlayCondition {
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         PlayerEntity player = context.getPlayer();
         List<ItemStack> armorItems = context.getArmorItems();
 
@@ -118,7 +118,7 @@ public class HasItemCondition implements IHudOverlayCondition {
         return true;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<HasItemCondition> {
         @Override
         public HasItemCondition fromJson(JsonObject obj) {
             String slot = JsonHelper.getString(obj, "slot");

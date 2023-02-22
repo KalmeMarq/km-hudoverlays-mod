@@ -17,22 +17,10 @@
   },
   "minecraft:pumpkin_blur": {
     "replace": true,
-    "overlays": [
-      {
-        "texture": "textures/misc/pumpkinblur.png",
-        "fit_to_screen": true,
-        "layer": -90
-      }
-    ]
+    "overlays": []
   },
   "minecraft:powder_snow_outline": {
     "replace": true,
-    "overlays": [
-      {
-        "texture": "textures/misc/powder_snow_outline.png",
-        "fit_to_screen": true,
-        "layer": -90
-      }
-    ]
+    "overlays": []
   }
 }

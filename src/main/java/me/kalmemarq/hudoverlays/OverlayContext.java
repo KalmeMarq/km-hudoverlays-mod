@@ -7,10 +7,10 @@ import org.apache.commons.compress.utils.Lists;
 import java.util.List;
 import java.util.Collections;
 
-public class HudOverlayContext {
+public class OverlayContext {
     private final PlayerEntity player;
 
-    public HudOverlayContext(PlayerEntity player) {
+    public OverlayContext(PlayerEntity player) {
         this.player = player;
     }
 
@@ -25,12 +25,10 @@ public class HudOverlayContext {
     }
 
     public List<ItemStack> getHotbarItems() {
-        List<ItemStack> l = player.getInventory().main.subList(0, 9);
-        return l;
+        return player.getInventory().main.subList(0, 9);
     }
 
     public List<ItemStack> getInventoryItems() {
-        List<ItemStack> l = player.getInventory().main.subList(9, 36);
-        return l;
+        return player.getInventory().main.subList(9, 36);
     }
 }

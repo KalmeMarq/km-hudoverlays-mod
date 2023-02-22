@@ -1,56 +1,33 @@
 {
+  "minecraft:pumpkin_blur": {
+    "overlays": [
+      {
+        "type": "gradient_renderer",
+        "color_start": "rgb(255, 0, 255)",
+        "color_end": "rgb(0, 0, 255)",
+        "orientation": "horizontal",
+        "size": [32, 32],
+        "layer": 100,
+        "offset": [10, 10]
+      }
+    ]
+  },
   "custom_spyglass": {
     "overlays": [
       {
-        "texture": "kmhudoverlays:textures/misc/powder_snow_outline_red_nineslice.png",
-        "nineslice_size": [178, 128, 178, 128],
-        "base_size": [256, 256],
-        "fit_to_screen": true,
+        "type": "text",
+        "text": "Hey",
+        "offset": ["50%vw - 50%w", "50% - 50px"],
+        "color": "#FFFF0000",
+        "anchor_in_parent": "top_left",
+        "anchor_in_self": "top_left",
+        "shadow": false,
         "layer": 100
       }
     ],
     "conditions": [
       {
         "condition": "is_using_spyglass"
-      }
-    ]
-  },
-  "my_custom0": {
-    "overlays": [
-      {
-        "texture": "kmhudoverlays:textures/misc/powder_snow_outline_red_nineslice.png",
-        "nineslice_size": [178, 128, 178, 128],
-        "base_size": [512, 256],
-        "fit_to_screen": true,
-        "layer": -100
-      }
-    ],
-    "conditions": [
-      {
-        "condition": "player_properties",
-        "properties": {
-          "is_on_fire": true
-        }
-      },
-      {
-        "condition": "is_underwater",
-        "value": false
-      },
-      {
-        "condition": "is_gamemode",
-        "name": "survival"
-      },
-      {
-        "condition": "is_difficulty",
-        "name": "easy"
-      },
-      {
-        "condition": "has_item",
-        "slot": "hotbar.0",
-        "item": "minecraft:iron_helmet",
-        "nbt": {
-          "behaveAsPumpkin": "1b"
-        }
       }
     ]
   }

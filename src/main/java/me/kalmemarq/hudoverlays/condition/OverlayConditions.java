@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Maps;
 
-public class HudOverlayConditions {
-    private static final Map<String, IHudOverlayConditionSerializer<?>> SERIALIZERS = Maps.newHashMap();
+public class OverlayConditions {
+    private static final Map<String, IOverlayConditionSerializer<?>> SERIALIZERS = Maps.newHashMap();
 
     static {
         register("is_difficulty", new DifficultyCondition.Serializer());
@@ -20,12 +20,12 @@ public class HudOverlayConditions {
         register("is_using_spyglass", new IsUsingSpyglass.Serializer());
     }
 
-    private static void register(String name, IHudOverlayConditionSerializer<?> serializer) {
+    public static void register(String name, IOverlayConditionSerializer<?> serializer) {
         SERIALIZERS.put(name, serializer);
     }
 
     @Nullable
-    public static IHudOverlayConditionSerializer<?> getSerializer(String name) {
+    public static IOverlayConditionSerializer<?> getSerializer(String name) {
         return SERIALIZERS.get(name);
     }
 }

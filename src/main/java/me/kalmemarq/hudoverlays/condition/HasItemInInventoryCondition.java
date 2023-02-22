@@ -3,7 +3,7 @@ package me.kalmemarq.hudoverlays.condition;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
-public class HasItemInInventoryCondition implements IHudOverlayCondition {
+public class HasItemInInventoryCondition implements IOverlayCondition {
     public Item item;
     @Nullable
     public Integer count;
@@ -28,7 +28,7 @@ public class HasItemInInventoryCondition implements IHudOverlayCondition {
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         PlayerEntity player = context.getPlayer();
         PlayerInventory playerInventory = player.getInventory();
         List<List<ItemStack>> combinedInv = ImmutableList.of(context.getInventoryItems(), context.getHotbarItems(), context.getArmorItems(), playerInventory.offHand);
@@ -49,7 +49,7 @@ public class HasItemInInventoryCondition implements IHudOverlayCondition {
         return false;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemInInventoryCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<HasItemInInventoryCondition> {
         @Override
         public HasItemInInventoryCondition fromJson(JsonObject obj) {
             String name = JsonHelper.getString(obj, "item");

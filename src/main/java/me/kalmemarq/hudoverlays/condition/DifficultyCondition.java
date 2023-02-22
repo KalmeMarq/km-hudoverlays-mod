@@ -1,26 +1,26 @@
 package me.kalmemarq.hudoverlays.condition;
 
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.Difficulty;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.JsonObject;
 
-public class DifficultyCondition implements IHudOverlayCondition {
+public class DifficultyCondition implements IOverlayCondition {
     @Nullable
     private final Difficulty diff;
 
     public DifficultyCondition(@Nullable Difficulty difficulty) {
-        this.diff = difficulty;
+        this.diff = difficulty == null ? Difficulty.PEACEFUL : difficulty;
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         return context.getPlayer().getWorld().getDifficulty() == this.diff;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<DifficultyCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<DifficultyCondition> {
         @Override
         public DifficultyCondition fromJson(JsonObject obj) {
             String df = JsonHelper.getString(obj, "name");

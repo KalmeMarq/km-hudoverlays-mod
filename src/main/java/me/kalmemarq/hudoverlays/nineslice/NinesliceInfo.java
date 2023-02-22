@@ -11,14 +11,9 @@ public class NinesliceInfo {
     public NinesliceInfo() {
     }
 
-    public NinesliceInfo setBaseSize(int width, int height) {
+    public void setBaseSize(int width, int height) {
         this.baseWidth = width;
         this.baseHeight = height;
-        return this;
-    }
-
-    public NinesliceInfo setNineslice(int xy) {
-        return setNineslice(xy, xy);
     }
 
     public NinesliceInfo setNineslice(int x, int y) {

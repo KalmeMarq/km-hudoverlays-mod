@@ -2,12 +2,12 @@ package me.kalmemarq.hudoverlays.condition;
 
 import com.google.gson.JsonObject;
 
-import me.kalmemarq.hudoverlays.HudOverlayContext;
+import me.kalmemarq.hudoverlays.OverlayContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.JsonHelper;
 
-public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
+public class HasItemNbtPropertyCondition implements IOverlayCondition {
     public String name;
 
     public HasItemNbtPropertyCondition(String name) {
@@ -15,7 +15,7 @@ public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
     }
 
     @Override
-    public boolean test(HudOverlayContext context) {
+    public boolean test(OverlayContext context) {
         if (context.getPlayer() != null) {
 
             ItemStack stack =  context.getArmorItems().get(0);
@@ -26,9 +26,7 @@ public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
                     if (c.contains(this.name)) {
                         return true;
                     } else if (c.contains("tag")) {
-                        if (c.getCompound("tag").contains(this.name)) {
-                            return true;
-                        }
+                        return c.getCompound("tag").contains(this.name);
                     }
                 }
             }
@@ -37,7 +35,7 @@ public class HasItemNbtPropertyCondition implements IHudOverlayCondition {
         return false;
     }
 
-    public static final class Serializer implements IHudOverlayConditionSerializer<HasItemNbtPropertyCondition> {
+    public static final class Serializer implements IOverlayConditionSerializer<HasItemNbtPropertyCondition> {
         @Override
         public HasItemNbtPropertyCondition fromJson(JsonObject obj) {
             String name = JsonHelper.getString(obj, "name");
